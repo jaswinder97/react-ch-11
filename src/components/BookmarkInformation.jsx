@@ -1,9 +1,8 @@
 import BookmarkSummary from "./BookmarkSummary"
-function BookmarkInformation({ children }) {
+function BookmarkInformation({ title, url }) {
   return (
     <div className="bookmark-information">
-      <h2>Bookmark Information</h2>
-      <BookmarkSummary children={children}/>
+      <BookmarkSummary title={title} url={url} />
     </div>
   )
 }
