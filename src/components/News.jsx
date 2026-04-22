@@ -1,5 +1,6 @@
 import Article from './Article';
 import InfoSidebar from './InfoSidebar';
+import BookmarkContext from '../store/bookmark-context';
 
 import { useState, useEffect, Fragment } from 'react';
 
@@ -14,6 +15,10 @@ function News() {
       .catch(error => console.error('Error fetching news:', error));
   }, []);
 
+  const bookmarkContextValue = {
+    bookmarkedArticles: articles
+  };
+
   function handleBookmark(article) {
     console.log('Bookmarking article:', article);
     setBookmarkedArticles(prevBookmarks => [...prevBookmarks, article]);
@@ -26,12 +31,14 @@ function News() {
         <p>Loading news...</p>
       ) : (
         <ul>
+          <BookmarkContext.Provider value={bookmarkContextValue}>
           {articles.map((article,index) => (
             <Fragment key={article.url}> 
-              <Article title={article.title} url={article.url} />
-              <InfoSidebar title={article.title} url={article.url} onClick={() => handleBookmark(article)} />
+              <Article ind={index} />
+              <InfoSidebar ind={index} onClick={() => handleBookmark(article)} />
             </Fragment>
           ))}
+          </BookmarkContext.Provider>
         </ul>
       )}
     </div>
